@@ -43,4 +43,32 @@ describe("Testing api routes", () => {
             })
     });
 
+    it("should not allow register without password", (done) => {
+        request(app)
+            .post("/register")
+            .send(`email=${email}`)
+            .then(response => {
+                expect(response.body.error).not.toBeUndefined();
+                return done();
+            })
+    });
+
+    it("should not allow register without email", (done) => {
+        request(app)
+            .post("/register")
+            .send(`password=${password}`)
+            .then(response => {
+                expect(response.body.error).not.toBeUndefined();
+                return done();
+            })
+    });
+    it("should not allow register without any data", (done) => {
+        request(app)
+            .post("/register")
+            .send(``)
+            .then(response => {
+                expect(response.body.error).not.toBeUndefined();
+                return done();
+            })
+    });
 })
