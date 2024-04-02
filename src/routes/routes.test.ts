@@ -71,4 +71,25 @@ describe("Testing api routes", () => {
                 return done();
             })
     });
+    it("should login correctly", (done) => {
+        request(app)
+            .post("/login")
+            .send(`email=${email}&password=${password}`)
+            .then(response => {
+                expect(response.body.error).toBeUndefined();
+                expect(response.body.status).toBeTruthy();
+                return done();
+            })
+    });
+
+    it("should not login with incorrect data", (done) => {
+        request(app)
+            .post("/login")
+            .send(`email=${email}&password=invalid`)
+            .then(response => {
+                expect(response.body.error).toBeUndefined();
+                expect(response.body.status).toBeFalsy();
+                return done();
+            })
+    });
 })
