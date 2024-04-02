@@ -6,7 +6,6 @@ dotenv.config();
 
 console.log(db);
 export const sequelize = new Sequelize(
-    
     db.db,
     db.user,
     db.password,
