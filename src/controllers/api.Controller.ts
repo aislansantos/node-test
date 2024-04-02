@@ -41,6 +41,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const list = async (req: Request, res: Response) => {
     let users = await UserService.all();
+
     let list: string[] = [];
 
     users.forEach((item => list.push(item.email)))
