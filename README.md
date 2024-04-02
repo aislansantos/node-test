@@ -1,2 +1,2 @@
 # node-test
-Peojeto para fixar testes com JEST
+Projeto para fixar testes com JEST

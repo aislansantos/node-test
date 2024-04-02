@@ -1,5 +1,4 @@
-import 
-import { User } from "../models/User";
+import { User, UserInstance } from "../models/User";
 import * as UserService from "./User.Service";
 
 describe("Testing user service", () => {
@@ -18,9 +17,19 @@ describe("Testing user service", () => {
         await User.sync({ force: true })
     });
     it("should create a new user", async () => {
-        const newUser = await UserService.createUser(email, password)
+        const newUser = await UserService.createUser(email, password) as UserInstance;
         expect(newUser).not.toBeInstanceOf(Error);
         expect(newUser).toHaveProperty("id");
         expect(newUser.email).toBe(email);
+    });
+
+    it("should not allow to create a user with existing email", async () => {
+        const newUser = await UserService.createUser(email, password);
+        expect(newUser).toBeInstanceOf(Error);
+    });
+
+    it("should find a find user by email", async () => {
+        const user = await UserService.findByEmail(email) as UserInstance;
+        expect(user.email).toBe(email);
     })
 })
