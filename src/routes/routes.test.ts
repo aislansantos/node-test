@@ -92,4 +92,16 @@ describe("Testing api routes", () => {
                 return done();
             })
     });
-})
+
+    it("should list users", (done) => {
+        request(app)
+            .get("/list")
+            .then(response => {
+                expect(response.body.error).toBeUndefined();
+                expect(response.body.list.length).toBeGreaterThanOrEqual(1);
+                expect(response.body.list).toContain(email);
+                return done();
+            })
+    });
+
+});
