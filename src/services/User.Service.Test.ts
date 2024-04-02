@@ -31,5 +31,23 @@ describe("Testing user service", () => {
     it("should find a find user by email", async () => {
         const user = await UserService.findByEmail(email) as UserInstance;
         expect(user.email).toBe(email);
-    })
+    });
+
+    it("should match the password from database", async () => {
+        const user = await UserService.findByEmail(email) as UserInstance;
+        const match = UserService.matchPassword(password, user.password);
+        expect(match).toBeTruthy();
+    });
+
+    it("should not match the password from database", async () => {
+        const user = await UserService.findByEmail(email) as UserInstance;
+        const match = UserService.matchPassword("invalid", user.password);
+        expect(match).toBeFalsy();
+    });
+
+    it("should get a list of users", async () => {
+        const users = await UserService.all();
+        expect(users.length).toBeGreaterThanOrEqual(1);
+        users.forEach(item => expect(item).toBeInstanceOf(User))
+    });
 })
